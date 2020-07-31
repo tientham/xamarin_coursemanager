@@ -12,6 +12,7 @@ namespace coursemanager
             InitializeComponent();
 
             var navigationPage = new NavigationPage(new LoginPage());
+            navigationPage.BarBackgroundColor = (Color) App.Current.Resources["BackgroundColor"];
             navigationPage.BarTextColor = Color.White;
             MainPage = navigationPage;
         }
