@@ -5,16 +5,15 @@ using Xamarin.Forms;
 
 namespace coursemanager.Views
 {
-    public partial class LoginPage : ContentPage
+    public partial class MainPage : ContentPage
     {
-        public LoginPage()
+        public MainPage()
         {
             InitializeComponent();
 
             NavigationPage.SetHasNavigationBar(this, false);
 
-            BindingContext = new LoginPageViewModel();
-            
+            BindingContext = new MainPageViewModel();
         }
     }
 }

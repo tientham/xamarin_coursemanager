@@ -11,7 +11,9 @@ namespace coursemanager
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            var navigationPage = new NavigationPage(new LoginPage());
+            navigationPage.BarTextColor = Color.White;
+            MainPage = navigationPage;
         }
 
         protected override void OnStart()
