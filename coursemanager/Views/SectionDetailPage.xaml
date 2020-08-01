@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="coursemanager.Views.SectionDetailPage"
+             xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              BackgroundColor="{x:StaticResource BackgroundColor}">
     <ContentPage.Content>
         <StackLayout
@@ -20,6 +21,24 @@
                 VerticalOptions="Start" />
 
             <Grid>
+
+                <shared:VideoView
+                    x:Name="videoView"
+                    Grid.Row="0"
+                    HeightRequest="300"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#ffaf49" />
+
+                <Image
+                    x:Name="playImage"
+                    Grid.Row="0"
+                    Source="play.png"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
 
             </Grid>
 
