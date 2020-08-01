@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using coursemanager.Interfaces;
 using coursemanager.Services;
+using coursemanager.Views;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
@@ -38,9 +39,9 @@ namespace coursemanager.ViewModels
 
         #region METHODS
 
-        private void ViewSectionCommandExecute(object obj)
+        private async void ViewSectionCommandExecute(object obj)
         {
-            ;
+            await Application.Current.MainPage.Navigation.PushAsync(new SectionDetailPage(obj as SectionViewModel));
         }
 
         #endregion
