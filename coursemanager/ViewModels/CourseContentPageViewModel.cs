@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using coursemanager.Interfaces;
 using coursemanager.Services;
+using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
 {
@@ -18,6 +20,8 @@ namespace coursemanager.ViewModels
             {
                 sections.ForEach(s => CourseSections.Add(s));
             }
+
+            ViewSectionCommand = new Command(ViewSectionCommandExecute);
         }
 
         #region PROPERTIES
@@ -26,6 +30,17 @@ namespace coursemanager.ViewModels
         {
             get;
             set;
+        }
+
+        public ICommand ViewSectionCommand { get; }
+
+        #endregion
+
+        #region METHODS
+
+        private void ViewSectionCommandExecute(object obj)
+        {
+            ;
         }
 
         #endregion
