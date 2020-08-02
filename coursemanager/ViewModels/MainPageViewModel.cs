@@ -2,13 +2,15 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using coursemanager.Views;
+using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        public MainPageViewModel()
+        public MainPageViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
             CourseContentCommand = new Command(CourseContentCommandExecute);
 
@@ -35,7 +37,10 @@ namespace coursemanager.ViewModels
 
         private async void CourseContentCommandExecute(object obj)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new CourseContentPage("Xamarin Forms with MVVM and Prism"));
+            // await Application.Current.MainPage.Navigation.PushAsync(new CourseContentPage("Xamarin Forms with MVVM and Prism"));
+            var param = new NavigationParameters();
+            param.Add(NavigationParameterKeys.COURSE_CONTENT_TITLE, "Xamarin Forms with MVVM and Prism");
+            await NavigationService.NavigateAsync(nameof(CourseContentPage), param);
         }
 
         #endregion

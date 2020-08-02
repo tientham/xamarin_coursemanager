@@ -2,13 +2,15 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using coursemanager.Views;
+using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
 {
     public class LoginPageViewModel : BaseViewModel
     {
-        public LoginPageViewModel()
+        public LoginPageViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
             LoginCommand = new Command(LoginCommandExecute);
         }
@@ -44,7 +46,8 @@ namespace coursemanager.ViewModels
 
         private async void LoginCommandExecute(object obj)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
+            // await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
+            await NavigationService.NavigateAsync(nameof(MainPage));
         }
 
         #endregion

@@ -25,7 +25,7 @@ namespace coursemanager.iOS
         {
             LibVLCSharpFormsRenderer.Init();
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
         }

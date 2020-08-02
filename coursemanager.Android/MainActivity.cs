@@ -23,7 +23,7 @@ namespace coursemanager.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             LibVLCSharpFormsRenderer.Init();
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App(new DroidInitializer()));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

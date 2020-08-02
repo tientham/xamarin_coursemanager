@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="coursemanager.Views.CourseContentPage"
              xmlns:controls="clr-namespace:coursemanager.Controls"
-             BackgroundColor="{x:StaticResource BackgroundColor}">
+             BackgroundColor="{x:StaticResource BackgroundColor}"
+             Title="{Binding Title}">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>

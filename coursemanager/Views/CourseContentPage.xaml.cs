@@ -7,15 +7,12 @@ namespace coursemanager.Views
 {
     public partial class CourseContentPage : ContentPage
     {
-        public CourseContentPage(string title)
+        public CourseContentPage()
         {
             InitializeComponent();
 
-            BindingContext = new CourseContentPageViewModel();
-
             NavigationPage.SetHasNavigationBar(this, true);
             NavigationPage.SetBackButtonTitle(this, "");
-            Title = title;
         }
     }
 }

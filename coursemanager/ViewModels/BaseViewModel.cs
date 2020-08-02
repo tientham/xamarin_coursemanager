@@ -1,53 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Prism.Mvvm;
+using Prism.Navigation;
 
 namespace coursemanager.ViewModels
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : BindableBase, INavigationAware, IDestructible
     {
-        public BaseViewModel()
+        protected INavigationService NavigationService { get; }
+
+        public BaseViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
         }
 
-        #region Event handler
-
-        /// <summary>
-        /// Occurs when the property is changed.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The PropertyChanged event occurs when changing the value of property.
-        /// </summary>
-        /// <param name="propertyName">The PropertyName</param>
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        private string title;
+        public string Title
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => title;
+            set
+            {
+                SetProperty(ref title, value);
+            }
         }
 
-        protected bool SetProperty<T>(ref T backingStore, T value,
-            [CallerMemberName] string propertyName = "",
-            Action onChanged = null)
+        public virtual void Destroy()
         {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
-            backingStore = value;
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-            return true;
+            ;
         }
 
-        protected void OnPropertyChanged(string propertyName)
+        public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Debug.WriteLine("--> BaseViewModel OnNavigatedFrom");
         }
-        #endregion
+
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
+        {
+            Debug.WriteLine("--> BaseViewModel OnNavigatedTo");
+        }
     }
 }

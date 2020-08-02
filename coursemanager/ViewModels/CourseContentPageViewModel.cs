@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using coursemanager.Interfaces;
 using coursemanager.Services;
 using coursemanager.Views;
+using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
@@ -12,7 +14,8 @@ namespace coursemanager.ViewModels
     {
         private readonly ICourseService courseService;
 
-        public CourseContentPageViewModel()
+        public CourseContentPageViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
             this.courseService = new CourseService();
             var sections = courseService.GetCourseSections();
@@ -39,9 +42,31 @@ namespace coursemanager.ViewModels
 
         #region METHODS
 
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.GetNavigationMode() == NavigationMode.Back)
+            {
+                Debug.WriteLine(NavigationService.GetNavigationUriPath());
+            }
+
+            parameters.TryGetValue(NavigationParameterKeys.COURSE_CONTENT_TITLE, out string title);
+            if (!string.IsNullOrEmpty(title))
+            {
+                Title = title;
+            }
+
+        }
+
         private async void ViewSectionCommandExecute(object obj)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new SectionDetailPage(obj as SectionViewModel));
+            // await Application.Current.MainPage.Navigation.PushAsync(new SectionDetailPage(obj as SectionViewModel));
+
+            var param = new NavigationParameters();
+            param.Add(NavigationParameterKeys.SECTION_DETAIL_INFO, obj);
+
+            await NavigationService.NavigateAsync(nameof(SectionDetailPage), param);
         }
 
         #endregion

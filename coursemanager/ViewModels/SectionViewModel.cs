@@ -1,10 +1,11 @@
 ﻿using System;
 using coursemanager.Models;
+using Prism.Mvvm;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
 {
-    public class SectionViewModel : BaseViewModel
+    public class SectionViewModel : BindableBase
     {
         public SectionViewModel(Section section)
         {

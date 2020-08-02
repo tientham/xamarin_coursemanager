@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Windows.Input;
 using LibVLCSharp.Shared;
+using Prism.Navigation;
+using Prism.Services;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
 {
     public class SectionDetailPageViewModel : BaseViewModel
     {
+        private readonly IPageDialogService dialogService;
+
         private LibVLC _libVLC;
 
-        public SectionDetailPageViewModel(SectionViewModel section)
+        public SectionDetailPageViewModel(INavigationService navationService, IPageDialogService dialogService)
+            : base(navationService)
         {
-            this.title = section.Title;
-            this.Transcript = section.Transcript;
+            this.dialogService = dialogService;
             this.imageVisible = true;
-
-            Core.Initialize();
-            _libVLC = new LibVLC();
-            _mediaPlayer = new MediaPlayer(_libVLC)
-            {
-                Media = new Media(_libVLC, new Uri(section.VideoUrl))
-            };
-
             PlayVideoCommand = new Command(PlayVideoCommandExecute);
         }
 
@@ -49,13 +45,13 @@ namespace coursemanager.ViewModels
             }
         }
 
-        private string title;
-        public string Title
+        private string sectionTitle;
+        public string SectionTitle
         {
-            get => title;
+            get => sectionTitle;
             set
             {
-                SetProperty(ref title, value);
+                SetProperty(ref sectionTitle, value);
             }
         }
 
@@ -73,15 +69,43 @@ namespace coursemanager.ViewModels
 
         #region
 
+        public async override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            parameters.TryGetValue<SectionViewModel>(NavigationParameterKeys.SECTION_DETAIL_INFO, out var sectionVM);
+
+            if (sectionVM != null)
+            {
+                this.Title = $"Lecture {sectionVM.Id}";
+                this.SectionTitle = sectionVM.Title;
+                this.Transcript = sectionVM.Transcript;
+
+                Core.Initialize();
+                _libVLC = new LibVLC();
+                MediaPlayer = new MediaPlayer(_libVLC)
+                {
+                    Media = new Media(_libVLC, new Uri(sectionVM.VideoUrl))
+                };
+                // RaisePropertyChanged(nameof(MediaPlayer));
+            } else
+            {
+                await dialogService.DisplayAlertAsync("Error", "Unable to get section information!", "OK");
+                await NavigationService.GoBackAsync();
+                return;
+            }
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            // MediaPlayer.Stop();
+        }
+
         private void PlayVideoCommandExecute(object obj)
         {
             ImageVisible = false;
-            _mediaPlayer.Play();
-        }
-
-        public void StopVideo()
-        {
-            _mediaPlayer.Stop();
+            MediaPlayer.Play();
         }
 
         #endregion

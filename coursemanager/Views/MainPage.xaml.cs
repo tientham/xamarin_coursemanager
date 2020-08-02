@@ -12,8 +12,6 @@ namespace coursemanager.Views
             InitializeComponent();
 
             NavigationPage.SetHasNavigationBar(this, false);
-
-            BindingContext = new MainPageViewModel();
         }
     }
 }
