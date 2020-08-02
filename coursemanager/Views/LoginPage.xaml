@@ -25,7 +25,11 @@
 
                 <Entry
                     Text="{Binding Username}"
-                    TextColor="Black" />
+                    TextColor="Black">
+                    <Entry.TextColor>
+                        <OnPlatform x:TypeArguments="Color" Android="White" iOS="Black" />
+                    </Entry.TextColor>
+                </Entry>
 
                 <Label
                     Text="Password"
@@ -34,7 +38,11 @@
 
                 <Entry
                     Text="{Binding Password}"
-                    TextColor="Black" />
+                    IsPassword="True">
+                    <Entry.TextColor>
+                        <OnPlatform x:TypeArguments="Color" Android="White" iOS="Black" />
+                    </Entry.TextColor>
+                </Entry>
 
             </StackLayout>
 

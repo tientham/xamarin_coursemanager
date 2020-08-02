@@ -1,4 +1,6 @@
 ﻿using System;
+using coursemanager.Interfaces;
+using coursemanager.Services;
 using coursemanager.Views;
 using Prism;
 using Prism.Ioc;
@@ -28,6 +30,9 @@ namespace coursemanager
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<IOfflineDataService, OfflineDataService>();
+            containerRegistry.RegisterSingleton<ICourseService, CourseService>();
+
             containerRegistry.RegisterForNavigation<LoginPage>(nameof(LoginPage));
             containerRegistry.RegisterForNavigation<MainPage>("MainPage");
             containerRegistry.RegisterForNavigation<CourseContentPage>(nameof(CourseContentPage));

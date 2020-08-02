@@ -14,10 +14,10 @@ namespace coursemanager.ViewModels
     {
         private readonly ICourseService courseService;
 
-        public CourseContentPageViewModel(INavigationService navigationService)
+        public CourseContentPageViewModel(INavigationService navigationService, ICourseService courseService)
             : base(navigationService)
         {
-            this.courseService = new CourseService();
+            this.courseService = courseService;
             var sections = courseService.GetCourseSections();
             CourseSections = new ObservableCollection<SectionViewModel>();
             if (sections.Count > 0)

@@ -3,15 +3,20 @@ using System.Diagnostics;
 using System.Windows.Input;
 using coursemanager.Views;
 using Prism.Navigation;
+using Prism.Services;
 using Xamarin.Forms;
 
 namespace coursemanager.ViewModels
 {
     public class LoginPageViewModel : BaseViewModel
     {
-        public LoginPageViewModel(INavigationService navigationService)
+        private readonly IPageDialogService pageDialogService;
+
+        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
             : base(navigationService)
         {
+            this.pageDialogService = pageDialogService;
+
             LoginCommand = new Command(LoginCommandExecute);
         }
 
@@ -46,6 +51,14 @@ namespace coursemanager.ViewModels
 
         private async void LoginCommandExecute(object obj)
         {
+            var canLogin = !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
+
+            if (!canLogin)
+            {
+                await this.pageDialogService.DisplayAlertAsync("Warning", "Must not empty fields!", "OK");
+                return;
+            }
+
             // await Application.Current.MainPage.Navigation.PushAsync(new MainPage());
             await NavigationService.NavigateAsync(nameof(MainPage));
         }

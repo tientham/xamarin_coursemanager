@@ -11,9 +11,9 @@ namespace coursemanager.Services
     {
         private readonly IOfflineDataService offlineDataService;
 
-        public CourseService()
+        public CourseService(IOfflineDataService offlineDataService)
         {
-            this.offlineDataService = new OfflineDataService();
+            this.offlineDataService = offlineDataService;
         }
 
         public List<SectionViewModel> GetCourseSections()
